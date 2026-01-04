@@ -1,0 +1,382 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    background: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+#gameCanvas {
+    display: block;
+    background: #87CEEB;
+    border-radius: 5px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Mobile Controls */
+.mobile-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: none;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+}
+
+.d-pad {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    pointer-events: all;
+}
+
+.d-btn {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(5px);
+}
+
+.d-btn:active {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0.95);
+}
+
+.d-btn[data-action="up"] {
+    top: 0;
+    left: 50px;
+}
+
+.d-btn[data-action="down"] {
+    bottom: 0;
+    left: 50px;
+}
+
+.d-btn[data-action="left"] {
+    top: 50px;
+    left: 0;
+}
+
+.d-btn[data-action="right"] {
+    top: 50px;
+    right: 0;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: all;
+}
+
+.action-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 0, 0, 0.3);
+    border: 2px solid rgba(255, 0, 0, 0.6);
+    border-radius: 50%;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(5px);
+}
+
+.action-btn:active {
+    background: rgba(255, 0, 0, 0.6);
+    transform: scale(0.9);
+}
+
+.attack-btn {
+    background: rgba(255, 100, 0, 0.3);
+    border-color: rgba(255, 100, 0, 0.6);
+}
+
+.attack-btn:active {
+    background: rgba(255, 100, 0, 0.6);
+}
+
+/* HUD */
+.hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.health-bar {
+    width: 200px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00);
+    transition: width 0.3s;
+    width: 100%;
+}
+
+.score {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Menu */
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.menu-content {
+    text-align: center;
+    color: white;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.menu-content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    animation: pulse 2s infinite;
+}
+
+.story {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    backdrop-filter: blur(5px);
+}
+
+.story p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.story strong {
+    color: #ff00ff;
+    font-size: 18px;
+}
+
+.start-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.start-btn:active {
+    transform: translateY(0);
+}
+
+.controls {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.controls h3 {
+    margin-bottom: 10px;
+    color: #ffff00;
+}
+
+.controls p {
+    margin: 5px 0;
+}
+
+/* Animações */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mobile-controls {
+        display: flex;
+    }
+    
+    .game-container {
+        padding: 5px;
+    }
+    
+    #gameCanvas {
+        max-width: 100vw;
+        max-height: 60vh;
+        width: auto;
+        height: auto;
+    }
+    
+    .hud {
+        top: 10px;
+        left: 10px;
+        font-size: 14px;
+    }
+    
+    .health-bar {
+        width: 150px;
+        height: 15px;
+    }
+    
+    .menu-content h1 {
+        font-size: 36px;
+    }
+    
+    .story {
+        padding: 15px;
+    }
+    
+    .story p {
+        font-size: 14px;
+    }
+    
+    .start-btn {
+        font-size: 18px;
+        padding: 12px 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .d-pad {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .d-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .d-btn[data-action="up"],
+    .d-btn[data-action="down"] {
+        left: 40px;
+    }
+    
+    .action-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .controls {
+        font-size: 12px;
+    }
+}
+
+/* Esconder menu quando jogo começa */
+.menu.hidden {
+    display: none;
+}
+
+/* Efeitos de game over/victory */
+.game-over-overlay,
+.victory-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+    color: white;
+    text-align: center;
+}
+
+.game-over-overlay h2 {
+    color: #ff0000;
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.victory-overlay h2 {
+    color: #00ff00;
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.restart-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.restart-btn:hover {
+    background: #45a049;
+    transform: scale(1.05);
+}

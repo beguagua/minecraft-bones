@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Bones - Derrote o Willager!</title>
+    
+    <script src="/lib/MakkoEngine.min.js"></script>
+    
+    <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+    <div class="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <!-- Controles Mobile -->
+        <div class="mobile-controls">
+            <div class="d-pad">
+                <button class="d-btn" data-action="up">↑</button>
+                <button class="d-btn" data-action="down">↓</button>
+                <button class="d-btn" data-action="left">←</button>
+                <button class="d-btn" data-action="right">→</button>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn attack-btn" data-action="attack">⚔️</button>
+                <button class="action-btn jump-btn" data-action="jump">🦘</button>
+            </div>
+        </div>
+        
+        <!-- HUD -->
+        <div class="hud">
+            <div class="health-bar">
+                <div class="health-fill"></div>
+            </div>
+            <div class="score">Wave: <span id="wave">1</span></div>
+        </div>
+        
+        <!-- Menu Inicial -->
+        <div class="menu" id="menu">
+            <div class="menu-content">
+                <h1>🦴 Minecraft Bones 🦴</h1>
+                <div class="story">
+                    <p>Em 1893, um Villager foi corrompido pelo minério Kyron...</p>
+                    <p>Agora ele é o <strong>WILLAGER</strong>, um vilão temível!</p>
+                    <p>Derrote-o e seus minions para salvar o mundo!</p>
+                </div>
+                <button class="start-btn" onclick="startGame()">🎮 COMEÇAR JOGO</button>
+                <div class="controls">
+                    <h3>Controles:</h3>
+                    <p>📱 Mobile: Use os botões na tela</p>
+                    <p>💻 PC: WASD/Setas para mover, ESPAÇO para atacar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts na ordem correta -->
+    <script src="src/utils/math.js"></script>
+    <script src="src/utils/input.js"></script>
+    <script src="src/engine/renderer.js"></script>
+    <script src="src/game/player.js"></script>
+    <script src="src/game/zombie.js"></script>
+    <script src="src/game/skeleton.js"></script>
+    <script src="src/game/willager.js"></script>
+    <script src="src/core/loop.js"></script>
+    <script src="src/core/game.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>
